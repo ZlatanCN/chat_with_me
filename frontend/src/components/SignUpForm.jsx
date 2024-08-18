@@ -46,7 +46,7 @@ const SignUpForm = (props) => {
       onFinish={props.onFinish}
       style={{
         maxWidth: 600,
-        width: 475
+        width: 475,
       }}
       scrollToFirstError
       colon={false}
@@ -97,7 +97,7 @@ const SignUpForm = (props) => {
         hasFeedback
       >
         <Input.Password className="text-gray-300" style={{
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
         }}/>
       </Form.Item>
 
@@ -124,7 +124,7 @@ const SignUpForm = (props) => {
         ]}
       >
         <Input.Password className="text-gray-300" style={{
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
         }}/>
       </Form.Item>
 
@@ -139,7 +139,9 @@ const SignUpForm = (props) => {
         ]}
       >
         <Select
-          placeholder={<span className={'text-gray-400'}>select your gender</span>}
+          placeholder={
+            <span className={'text-gray-400'}>select your gender</span>
+          }
         >
           <Option value="male">Male</Option>
           <Option value="female">Female</Option>

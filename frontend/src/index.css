@@ -23,14 +23,29 @@ body {
 }
 
 .ant-input {
-  @apply text-gray-300;
+  @apply text-gray-300 border-gray-300
 }
 
 .ant-select-selection-item {
   @apply text-gray-300;
 }
 
-/* 在 CSS 文件中定义 */
 .ant-input::placeholder {
   @apply text-gray-400;
+}
+
+.ant-input-outlined {
+  @apply bg-transparent hover:bg-transparent focus:bg-transparent;
+}
+
+.ant-input-outlined:focus-within {
+  @apply bg-transparent
+}
+
+.ant-input-affix-wrapper {
+  @apply text-gray-300
+}
+
+.ant-list-item {
+  @apply cursor-pointer rounded-xl hover:bg-blue-500 hover:bg-opacity-30
 }
