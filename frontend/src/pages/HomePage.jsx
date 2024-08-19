@@ -8,11 +8,9 @@ const HomePage = () => {
         'backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 ' +
         'p-6 shadow-md flex flex-row gap-4'}
       >
-        {/* Sidebar */}
         <div>
           <Sidebar/>
         </div>
-        {/*ChatContainer*/}
         <div>
           <ChatContainer/>
         </div>

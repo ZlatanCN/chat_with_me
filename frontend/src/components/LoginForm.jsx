@@ -32,11 +32,7 @@ const LoginForm = (props) => {
   `;
 
   return (
-    <ConfigProvider
-      button={{
-        className: linearGradientButton,
-      }}
-    >
+    <ConfigProvider button={{ className: linearGradientButton }}>
       <Form
         name="login"
         initialValues={{
@@ -75,7 +71,7 @@ const LoginForm = (props) => {
             },
           ]}
         >
-          <Input
+          <Input.Password
             prefix={<LockOutlined/>}
             type="password"
             placeholder="Password"
@@ -97,12 +93,13 @@ const LoginForm = (props) => {
             block
             type="primary"
             htmlType="submit"
+            loading={props.isLoading}
             className={'font-semibold'}
           >
             Log in
           </Button>
           <div className={'mt-3'}>
-            <span className={'text-gray-300'}>or</span> <a href=""
+            <span className={'text-gray-300'}>or</span> <a href="/signup"
                                                            className={'text-blue-500'}>Register
             now!</a>
           </div>
@@ -114,6 +111,7 @@ const LoginForm = (props) => {
 
 LoginForm.propTypes = {
   onFinish: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default LoginForm;

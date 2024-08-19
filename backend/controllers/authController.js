@@ -80,14 +80,14 @@ const login = async (req, res) => {
   }
 };
 
-const logout = (res) => {
+const logout = (req, res) => {
   try {
     // Clear the cookie
     res.cookie('jwt', '', { maxAge: 0 });
     res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
     console.log(chalk.red('Error in logout:'), error.message);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
