@@ -33,11 +33,11 @@ const sendMessage = async (req, res) => {
         conversation: conversation,
       });
     } else {
-      res.status(400).json({ message: 'Message not sent' });
+      res.status(400).json({ error: 'Message not sent' });
     }
   } catch (error) {
     console.log(chalk.red('Error in sending message:'), error.message);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 

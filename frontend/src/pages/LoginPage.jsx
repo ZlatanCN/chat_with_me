@@ -6,7 +6,7 @@ import { useAuthContext } from '../context/AuthContext.jsx';
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
-  const {setAuthUser} = useAuthContext();
+  const { setAuthUser } = useAuthContext();
 
   const onFinish = async (values) => {
     const { username, password } = values;
@@ -32,7 +32,7 @@ const LoginPage = () => {
           content: 'Login successful',
         });
         setTimeout(() => {
-          localStorage.setItem('authUser', JSON.stringify(data))
+          localStorage.setItem('authUser', JSON.stringify(data));
           setAuthUser(data);
         }, 500);
       }

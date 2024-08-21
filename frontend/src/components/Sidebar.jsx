@@ -2,8 +2,9 @@ import { Input, Button, Popconfirm, message } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import Contact from './Contact.jsx';
 import { useAuthContext } from '../context/AuthContext.jsx';
+import PropTypes from 'prop-types';
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   const { setAuthUser } = useAuthContext();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -54,7 +55,7 @@ const Sidebar = () => {
           }}
         />
         {/*Contact list*/}
-        <Contact/>
+        <Contact contacts={props.contacts}/>
 
         {/*Logout button*/}
         <div className={'-ml-3 mt-3'}>
@@ -81,6 +82,10 @@ const Sidebar = () => {
       </div>
     </>
   );
+};
+
+Sidebar.proptypes = {
+  contacts: PropTypes.array.isRequired,
 };
 
 export default Sidebar;
