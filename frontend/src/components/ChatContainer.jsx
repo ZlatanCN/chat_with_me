@@ -4,10 +4,10 @@ import ChatInput from './ChatInput.jsx';
 import NoChat from './NoChat.jsx';
 import useChatStore from '../store/useChatStore.js';
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 const ChatContainer = () => {
   const { selectedChat, setSelectedChat } = useChatStore();
-
 
   useEffect(() => {
     // Cleanup function when the component unmounts
@@ -17,18 +17,23 @@ const ChatContainer = () => {
   }, []);
 
   return (
-    <div className={'md:min-w-[450px] flex flex-col'}>
+    <div className={'md:min-w-[450px] flex flex-col h-full'}>
       {!selectedChat ? (
         <NoChat/>
       ) : (
         <>
           <ChatHeader receiver={selectedChat.name}/>
-          <ChatMessages/>
-          <ChatInput/>
+          <div className={'flex-1'}>
+            <ChatMessages/>
+          </div>
+          <div className={'sticky bottom-0'}>
+            <ChatInput/>
+          </div>
         </>
       )}
     </div>
   );
 };
+
 
 export default ChatContainer;

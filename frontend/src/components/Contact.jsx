@@ -9,7 +9,7 @@ const Contact = (props) => {
   const { selectedChat, setSelectedChat } = useChatStore();
 
   return (
-    <List className={'mt-2'}>
+    <List className={'mt-2 max-h-96 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-transparent'}>
       {props.contacts.map((contact) => (
         <List.Item
           onClick={() => setSelectedChat(contact)}

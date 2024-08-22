@@ -42,7 +42,7 @@ const Sidebar = (props) => {
   };
 
   return (
-    <>
+    <div>
       {contextHolder}
       <div>
         {/*Search bar*/}
@@ -80,7 +80,7 @@ const Sidebar = (props) => {
           </Popconfirm>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

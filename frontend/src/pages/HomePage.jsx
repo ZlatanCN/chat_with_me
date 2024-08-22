@@ -49,9 +49,7 @@ const HomePage = () => {
               'backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 ' +
               'p-6 shadow-md flex flex-row gap-4'}
           >
-            <div>
-              <Sidebar contacts={users}/>
-            </div>
+            <Sidebar contacts={users}/>
             <div>
               <ChatContainer/>
             </div>

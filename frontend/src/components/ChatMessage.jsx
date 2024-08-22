@@ -6,23 +6,23 @@ const ChatMessage = (props) => {
     <>
       {props.isSender ? (
         <div className={'flex flex-row gap-1.5'}>
-          <Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=111`}/>
-          <div
-            className={'bg-gray-300 max-w-xs w-auto h-auto rounded-lg flex items-center pl-2 break-words mr-auto'}>
-            <p className={'text-gray-800 text-sm mr-1'}>
-              {props.message}
-            </p>
-          </div>
-        </div>
-      ) : (
-        <div className={'flex flex-row gap-1.5'}>
           <div
             className={'bg-gray-300 max-w-xs w-auto h-auto rounded-lg flex items-center pl-2 break-words ml-auto'}>
             <p className={'text-gray-800 text-sm mr-1'}>
               {props.message}
             </p>
           </div>
-          <Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=222`}/>
+          <Avatar src={props.avatar}/>
+        </div>
+      ) : (
+        <div className={'flex flex-row gap-1.5'}>
+          <Avatar src={props.avatar}/>
+          <div
+            className={'bg-gray-300 max-w-xs w-auto h-auto rounded-lg flex items-center pl-2 break-words mr-auto'}>
+            <p className={'text-gray-800 text-sm mr-1'}>
+              {props.message}
+            </p>
+          </div>
         </div>
       )}
     </>
@@ -31,7 +31,7 @@ const ChatMessage = (props) => {
 
 ChatMessage.propTypes = {
   isSender: PropTypes.bool.isRequired,
-  message: PropTypes.string,
+  message: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
 };
 

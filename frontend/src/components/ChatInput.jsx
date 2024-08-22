@@ -7,7 +7,7 @@ import useChatStore from '../store/useChatStore.js';
 const ChatInput = () => {
   const [form] = useForm();
   const inputRef = useRef(null);
-  const { selectedChat } = useChatStore();
+  const { selectedChat, messages, setMessages } = useChatStore();
 
   const sendMessage = async (message) => {
     try {
@@ -19,6 +19,9 @@ const ChatInput = () => {
       const data = await res.json();
       if (data.error) {
         console.log('Error sending message:', data.error);
+      } else {
+        console.log('Message sent:', data.message);
+        setMessages([...messages, data.message]);
       }
     } catch (error) {
       console.log('Error sending message:', error);
@@ -28,10 +31,6 @@ const ChatInput = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     form.submit();
-
-    if (inputRef.current) {
-      setTimeout(() => inputRef.current.focus(), 0);
-    }
   };
 
   const onFinish = async (values) => {
@@ -41,6 +40,9 @@ const ChatInput = () => {
     }
     await sendMessage(values.message);
     form.resetFields();
+    if (inputRef.current) {
+      setTimeout(() => inputRef.current.focus(), 0);
+    }
   };
 
   return (
