@@ -43,7 +43,7 @@ const HomePage = () => {
         />
       ) : (
         <div
-          className={'flex flex-col items-center justify-center min-w-96 mx-auto'}>
+          className={'flex flex-col items-center justify-center min-w-96 mx-auto h-[508px]'}>
           <div
             className={'h-full w-full bg-blue-700 rounded-lg bg-clip-padding ' +
               'backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 ' +

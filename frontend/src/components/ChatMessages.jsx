@@ -6,6 +6,7 @@ import { Skeleton } from 'antd';
 const ChatMessages = () => {
   const { messages, setMessages, selectedChat } = useChatStore();
   const [loading, setLoading] = useState(false);
+  const lastMessageRef = useRef(null);
 
   const getMessages = async () => {
     setLoading(true);
@@ -31,9 +32,14 @@ const ChatMessages = () => {
     if (selectedChat?._id) {
       getMessages();
     }
-    console.log('Selected chat:', selectedChat);
-    console.log('Messages:', messages);
   }, [selectedChat?._id, setMessages]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 0);
+  }, [messages]);
+
 
   return (
     <>
@@ -47,15 +53,16 @@ const ChatMessages = () => {
         <div
           className={'px-4 flex-1 flex flex-col gap-5 max-h-80 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-sky-600'}>
           {messages?.map((message, index) => (
-            <ChatMessage
-              key={index}
-              message={message.content}
-              avatar={message.senderId !== selectedChat._id
-                ? (JSON.parse(localStorage.getItem('authUser')).avatar)
-                : (selectedChat.avatar)}
-              isSender={(message.senderId !== selectedChat._id) ||
-                (message.senderId === message.receiverId)}
-            />
+            <div key={index} ref={lastMessageRef}>
+              <ChatMessage
+                message={message}
+                avatar={message.senderId !== selectedChat._id
+                  ? (JSON.parse(localStorage.getItem('authUser')).avatar)
+                  : (selectedChat.avatar)}
+                isSender={(message.senderId !== selectedChat._id) ||
+                  (message.senderId === message.receiverId)}
+              />
+            </div>
           ))}
         </div>
       )}

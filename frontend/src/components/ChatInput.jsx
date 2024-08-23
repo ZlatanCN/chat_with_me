@@ -50,7 +50,7 @@ const ChatInput = () => {
       form={form}
       onFinish={onFinish}
     >
-      <Form.Item name={'message'} id={'message'}>
+      <Form.Item name={'message'} id={'message'} className={'m-0'}>
         <Input
           placeholder="Type a message..."
           prefix={<SendOutlined className="text-gray-300"/>}
