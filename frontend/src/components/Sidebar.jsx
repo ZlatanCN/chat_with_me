@@ -49,7 +49,7 @@ const Sidebar = (props) => {
     const filteredContacts = props.contacts.filter((contact) => {
       const name = contact.name.replace(/\s*/g, '').toLowerCase();
       return name.includes(search);
-    })
+    });
     console.log('filteredContacts:', filteredContacts);
     setContacts(filteredContacts);
   };
@@ -72,7 +72,7 @@ const Sidebar = (props) => {
         <Contact contacts={contacts}/>
 
         {/*Logout button*/}
-        <div className={'-ml-3 mt-3 mt-auto'}>
+        <div className={'-ml-3 mt-auto'}>
           <Popconfirm
             title={'Logout ChatWithMe'}
             description={'Are you sure you want to logout?'}

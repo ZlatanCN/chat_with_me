@@ -2,11 +2,14 @@ import ChatMessage from './ChatMessage.jsx';
 import useChatStore from '../store/useChatStore.js';
 import { useEffect, useRef, useState } from 'react';
 import { Skeleton } from 'antd';
+import { useSocketContext } from '../context/SocketContext.jsx';
+import notificationSound from '../assets/notification.mp3';
 
 const ChatMessages = () => {
   const { messages, setMessages, selectedChat } = useChatStore();
   const [loading, setLoading] = useState(false);
   const lastMessageRef = useRef(null);
+  const {socket} = useSocketContext();
 
   const getMessages = async () => {
     setLoading(true);
@@ -40,6 +43,16 @@ const ChatMessages = () => {
     }, 0);
   }, [messages]);
 
+  useEffect(() => {
+    socket?.on('newMessage', (newMessage) => {
+      const notification = new Audio(notificationSound);
+      notification.play();
+      setMessages([...messages, newMessage]);
+    })
+
+    return () => socket?.off('newMessage');
+  }, [socket, messages, setMessages]);
+
 
   return (
     <>
@@ -51,7 +64,7 @@ const ChatMessages = () => {
         </div>
       ) : (
         <div
-          className={'px-4 flex-1 flex flex-col gap-5 max-h-80 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-sky-600'}>
+          className={'px-4 flex-1 flex flex-col gap-5 max-h-[420px] overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-sky-600'}>
           {messages?.map((message, index) => (
             <div key={index} ref={lastMessageRef}>
               <ChatMessage
