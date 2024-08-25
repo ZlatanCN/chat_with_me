@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
-import { Avatar } from 'antd';
+import { Avatar, Image } from 'antd';
+import { Buffer } from 'buffer';
 
 const ChatMessage = (props) => {
   const localTime = new Date(props.message.createdAt).toLocaleString();
+  const imageSrc = props.message.imageObj ? `data:image/*;base64,${Buffer.from(
+    props.message.imageObj.data).toString('base64')}` : null;
 
   return (
     <>
@@ -11,8 +14,11 @@ const ChatMessage = (props) => {
           <div className={'flex flex-row gap-1.5'}>
             <div
               className={'bg-blue-300 max-w-xs w-auto h-auto rounded-lg flex items-center pl-2 ml-auto'}>
-              <p className={'text-gray-800 text-sm mr-[8px] break-all mt-1.5 mb-1.5'}>
-                {props.message.content}
+              <p
+                className={'text-gray-800 text-sm mr-[8px] break-all mt-1.5 mb-1.5'}>
+                {props.message.content ?
+                  (props.message.content) :
+                  (<Image src={imageSrc}/>)}
               </p>
             </div>
             <Avatar src={props.avatar}/>
@@ -27,8 +33,11 @@ const ChatMessage = (props) => {
             <Avatar src={props.avatar}/>
             <div
               className={'bg-gray-300 max-w-xs w-auto h-auto rounded-lg flex items-center pl-2 mr-auto'}>
-              <p className={'text-gray-800 text-sm mr-[8px] break-all mt-1.5 mb-1.5'}>
-                {props.message.content}
+              <p
+                className={'text-gray-800 text-sm mr-[8px] break-all mt-1.5 mb-1.5'}>
+                {props.message.content ?
+                  (props.message.content) :
+                  (<Image src={imageSrc}/>)}
               </p>
             </div>
           </div>

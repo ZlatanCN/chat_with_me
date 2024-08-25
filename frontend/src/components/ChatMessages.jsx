@@ -10,6 +10,7 @@ const ChatMessages = () => {
   const [loading, setLoading] = useState(false);
   const lastMessageRef = useRef(null);
   const {socket} = useSocketContext();
+  console.log('messages:', messages);
 
   const getMessages = async () => {
     setLoading(true);

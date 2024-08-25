@@ -1,10 +1,15 @@
 import Conversation from '../models/conversationModel.js';
 import Message from '../models/messageModel.js';
 import chalk from 'chalk';
+import { getReceiverSocketId } from '../socket/socket.js';
+import { io } from '../socket/socket.js';
 
 const sendMessage = async (req, res) => {
   try {
-    const { message } = req.body;
+    let { message } = req.body;
+    if (!message) {
+      message = req.file
+    }
     const { id: receiverId } = req.params;
     const senderId = req.user._id;
     let conversation = await Conversation.findOne({
@@ -22,12 +27,21 @@ const sendMessage = async (req, res) => {
     const newMessage = new Message({
       senderId,
       receiverId,
-      content: message,
+      content: message === req.file ? '' : message,
+      imageObj: message === req.file ? req.file.buffer : undefined,
     });
     if (newMessage) {
       conversation.messages.push(newMessage._id);
+
       // Run in parallel
       await Promise.all([newMessage.save(), conversation.save()]);
+
+      // Emit the message to the receiver
+      const receiverSocketId = getReceiverSocketId(receiverId);
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit('newMessage', newMessage);
+      }
+
       res.status(200).json({
         message: newMessage,
         conversation: conversation,
