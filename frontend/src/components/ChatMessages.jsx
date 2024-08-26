@@ -10,7 +10,6 @@ const ChatMessages = () => {
   const [loading, setLoading] = useState(false);
   const lastMessageRef = useRef(null);
   const {socket} = useSocketContext();
-  console.log('messages:', messages);
 
   const getMessages = async () => {
     setLoading(true);
@@ -41,7 +40,7 @@ const ChatMessages = () => {
   useEffect(() => {
     setTimeout(() => {
       lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 0);
+    }, 100);
   }, [messages]);
 
   useEffect(() => {

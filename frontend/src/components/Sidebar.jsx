@@ -28,7 +28,7 @@ const Sidebar = (props) => {
       } else {
         messageApi.open({
           type: 'success',
-          content: 'Logout successful',
+          content: 'Logout Successful',
         });
         setTimeout(() => {
           localStorage.removeItem('authUser');
@@ -80,7 +80,7 @@ const Sidebar = (props) => {
             onCancel={() => {
               messageApi.open({
                 type: 'info',
-                content: 'Logout canceled',
+                content: 'Logout Canceled',
               });
             }}
             okText={'Yes'}

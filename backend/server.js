@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-import connectToDatabase from './db/connectToDatabase.js';
+import {connectToDatabase} from './db/connectToDatabase.js';
 import { app, server } from './socket/socket.js';
 import chalk from 'chalk';
 

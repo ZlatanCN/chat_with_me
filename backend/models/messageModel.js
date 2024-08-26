@@ -15,7 +15,7 @@ const messageSchema = new mongoose.Schema({
     type: String,
   },
   imageObj: {
-    type:Buffer,
+    type: Buffer,
   },
   // Timestamps give us createdAt and updatedAt fields
 }, { timestamps: true });

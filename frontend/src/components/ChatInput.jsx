@@ -1,14 +1,21 @@
-import { Button, Form, Input, message, Upload } from 'antd';
-import { PictureOutlined, SendOutlined } from '@ant-design/icons';
+import { Button, Form, Input, message, Popconfirm, Upload } from 'antd';
+import {
+  PictureOutlined,
+  SendOutlined, SmileOutlined,
+  UploadOutlined, VideoCameraOutlined,
+} from '@ant-design/icons';
 import { useForm } from 'antd/es/form/Form';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import useChatStore from '../store/useChatStore.js';
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
 
 const ChatInput = () => {
   const [form] = useForm();
   const inputRef = useRef(null);
   const { selectedChat, messages, setMessages } = useChatStore();
   const [messageApi, contextHolder] = message.useMessage();
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const sendMessage = async (message) => {
     let body;
@@ -16,10 +23,15 @@ const ChatInput = () => {
     if (typeof message === 'string') {
       body = JSON.stringify({ message });
       headers['Content-Type'] = 'application/json';
-    } else {
+    } else if (message.type.startsWith('image')) {
       const formData = new FormData();
       formData.append('imageObj', message);
       body = formData;
+    } else {
+      messageApi.open({
+        type: 'error',
+        content: 'Invalid file type!',
+      });
     }
 
     try {
@@ -36,7 +48,7 @@ const ChatInput = () => {
         setMessages([...messages, data.message]);
       }
     } catch (error) {
-      console.log('Error sending message:', error);
+      console.log('Error sending message in ChatInput:', error);
     }
   };
 
@@ -72,6 +84,14 @@ const ChatInput = () => {
     await sendMessage(options.file);
   };
 
+  const handleEmojiSelect = (emoji) => {
+    form.setFieldsValue({
+      message: (form.getFieldValue('message') || '') + emoji.native,
+    });
+    setShowEmojiPicker(false);
+    inputRef.current.focus();
+  };
+
   return (
     <>
       {contextHolder}
@@ -89,6 +109,26 @@ const ChatInput = () => {
             ref={inputRef}
           />
         </Form.Item>
+        <Form.Item className={'mt-[12px] ml-2'}>
+          <Button
+            icon={<SmileOutlined/>}
+            type={'link'}
+            className={'text-gray-400'}
+            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+          />
+          {showEmojiPicker && (
+            <div className={'absolute bottom-10 right-0 z-50 fade-in'}>
+              <Picker
+                data={data}
+                onEmojiSelect={handleEmojiSelect}
+                theme={'light'}
+                skinTonePosition={'search'}
+                emojiButtonSize={32}
+                emojiSize={24}
+              />
+            </div>
+          )}
+        </Form.Item>
         <Form.Item className={'mt-[12px]'}>
           <Upload
             accept="image/*"
@@ -98,8 +138,11 @@ const ChatInput = () => {
             maxCount={1}
             customRequest={handleUpload}
           >
-            <Button icon={<PictureOutlined/>} type={'link'}
-                    className={'text-gray-400'}/>
+            <Button
+              icon={<PictureOutlined/>}
+              type={'link'}
+              className={'text-gray-400'}
+            />
           </Upload>
         </Form.Item>
       </Form>

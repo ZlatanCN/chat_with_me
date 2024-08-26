@@ -8,7 +8,7 @@ const sendMessage = async (req, res) => {
   try {
     let { message } = req.body;
     if (!message) {
-      message = req.file
+      message = req.files;
     }
     const { id: receiverId } = req.params;
     const senderId = req.user._id;
@@ -27,8 +27,8 @@ const sendMessage = async (req, res) => {
     const newMessage = new Message({
       senderId,
       receiverId,
-      content: message === req.file ? '' : message,
-      imageObj: message === req.file ? req.file.buffer : undefined,
+      content: message === req.files ? '' : message,
+      imageObj: message === req.files ? req.files.imageObj[0].buffer : undefined,
     });
     if (newMessage) {
       conversation.messages.push(newMessage._id);

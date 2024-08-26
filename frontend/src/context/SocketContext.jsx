@@ -6,7 +6,7 @@ const SocketContext = createContext();
 
 const useSocketContext = () => {
   return useContext(SocketContext);
-}
+};
 
 const SocketContextProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
@@ -18,15 +18,17 @@ const SocketContextProvider = ({ children }) => {
       const socket = io('http://localhost:5000', {
         query: {
           userId: authUser._id,
-        }
+        },
       });
       setSocket(socket);
 
       socket.on('getOnlineUsers', (users) => {
         setOnlineUsers(users);
-      })
+      });
 
-      return () => socket.close();
+      return () => {
+        socket.close();
+      };
     } else {
       if (socket) {
         socket.close();

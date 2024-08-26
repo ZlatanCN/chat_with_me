@@ -49,3 +49,16 @@ body {
 .ant-list .ant-list-item .ant-list-item-meta .ant-list-item-meta-title {
   @apply text-gray-300;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.25s ease-in-out;
+}
