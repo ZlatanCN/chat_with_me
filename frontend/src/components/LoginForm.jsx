@@ -84,7 +84,6 @@ const LoginForm = (props) => {
             <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox className={'text-gray-300'}>Remember me</Checkbox>
             </Form.Item>
-            <a href="" className={'text-blue-505'}>Forgot password</a>
           </Flex>
         </Form.Item>
 

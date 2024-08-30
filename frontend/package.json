@@ -16,6 +16,7 @@
     "@emotion/css": "^11.13.0",
     "antd": "^5.20.1",
     "bson": "^6.8.0",
+    "chat-with-me": "file:..",
     "emoji-mart": "^5.6.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
