@@ -14,7 +14,7 @@ const LoginPage = () => {
 
     try {
       console.log('Logging in...');
-      const res = await fetch(`${process.env.BASE_URL}/api/auth/login`, {
+      const res = await fetch(`api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
