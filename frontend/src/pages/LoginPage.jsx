@@ -13,8 +13,8 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      console.log('Logging in...');
       const res = await fetch(`/api/auth/login`, {
+        origin: 'https://chat-with-me-chi.vercel.app',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),

@@ -17,7 +17,7 @@ dotenv.config();
 app.use(express.json()); // Allow to parse JSON data
 app.use(cookieParser()); // Allow to parse cookies
 app.use(cors({
-  origin: 'https://chat-with-me-chi.vercel.app',
+  origin: ['https://chat-with-me-chi.vercel.app', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 })); // Allow cross-origin requests
