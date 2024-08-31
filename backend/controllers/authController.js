@@ -53,6 +53,8 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   try {
+    console.log('Login route hit:', req.method, req.body);
+
     const { username, password } = req.body;
 
     // Check if the user exists
