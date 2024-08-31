@@ -22,8 +22,6 @@ const LoginPage = () => {
       const data = await res.json();
 
       if (data.message) {
-        console.log('JSON data', data)
-        console.log('Error in LoginPage:', data.message);
         messageApi.open({
           type: 'error',
           content: data.message,
