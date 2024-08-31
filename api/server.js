@@ -1,11 +1,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import authRoutes from './routes/authRoutes.js';
-import messageRoutes from './routes/messageRoutes.js';
-import userRoutes from './routes/userRoutes.js';
-import { connectToDatabase } from './db/connectToDatabase.js';
-import { app, server } from './socket/socket.js';
+import authRoutes from '../backend/routes/authRoutes.js';
+import messageRoutes from '../backend/routes/messageRoutes.js';
+import userRoutes from '../backend/routes/userRoutes.js';
+import { connectToDatabase } from '../backend/db/connectToDatabase.js';
+import { app, server } from '../backend/socket/socket.js';
 import chalk from 'chalk';
 import path from 'path';
 import cors from 'cors';
@@ -16,11 +16,6 @@ dotenv.config();
 
 app.use(express.json()); // Allow to parse JSON data
 app.use(cookieParser()); // Allow to parse cookies
-app.use(cors({
-  origin: ['https://chat-with-me-chi.vercel.app', 'http://localhost:3000'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
-})); // Allow cross-origin requests
 
 // Auth route http://localhost:5000/api/auth/
 app.use('/api/auth', authRoutes);
