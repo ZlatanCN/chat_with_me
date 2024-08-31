@@ -13,14 +13,15 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
+      console.log('Logging in...');
       const res = await fetch(`${process.env.BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-
+      console.log('Response:', res);
       const data = await res.json();
-
+      console.log('Data:', data);
       if (data.message) {
         messageApi.open({
           type: 'error',
