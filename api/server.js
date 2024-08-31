@@ -17,6 +17,8 @@ dotenv.config();
 app.use(express.json()); // Allow to parse JSON data
 app.use(cookieParser()); // Allow to parse cookies
 
+app.get("/", (req, res) => res.send("Express on Vercel")); // Test route
+
 // Auth route http://localhost:5000/api/auth/
 app.use('/api/auth', authRoutes);
 // Message route http://localhost:5000/api/messages/
@@ -37,3 +39,5 @@ server.listen(PORT, () => {
   connectToDatabase();
   console.log(`Server is running on port ${chalk.blueBright(PORT)}`);
 });
+
+export { app, server };
