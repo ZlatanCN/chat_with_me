@@ -34,10 +34,12 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
 });
 
+// Connect to the database
+connectToDatabase();
+
 // Start the server
 if (process.env.NODE_ENV !== 'production') {
   server.listen(PORT, () => {
-    connectToDatabase();
     console.log(`Server is running on port ${chalk.blueBright(PORT)}`);
   });
 }
