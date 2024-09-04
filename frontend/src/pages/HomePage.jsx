@@ -2,6 +2,7 @@ import Sidebar from '../components/Sidebar.jsx';
 import ChatContainer from '../components/ChatContainer.jsx';
 import { useEffect, useState } from 'react';
 import { message, Spin } from 'antd';
+import { useAblyContext } from '../context/AblyContext.jsx';
 
 const HomePage = () => {
   const [loading, setLoading] = useState(false);

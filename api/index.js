@@ -26,13 +26,13 @@ app.use('/api/messages', messageRoutes);
 // User route http://localhost:5000/api/users/
 app.use('/api/users', userRoutes);
 
-// Serve static assets if in production
-app.use(express.static(path.join(__dirname, '/frontend/dist')));
-
-// Serve the index.html file if in production
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
-});
+// // Serve static assets if in production
+// app.use(express.static(path.join(__dirname, '/frontend/dist')));
+//
+// // Serve the index.html file if in production
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+// });
 
 // Connect to the database
 connectToDatabase();
