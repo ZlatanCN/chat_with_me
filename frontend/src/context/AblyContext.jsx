@@ -13,6 +13,32 @@ const AblyContextProvider = ({ children }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const { authUser } = useAuthContext();
 
+  const handleEnterChannel = async (channel) => {
+    // User enters the channel
+    await channel.presence.enter();
+    console.log(`User ${authUser._id} has entered the channel`);
+
+    // Fetch the full list of online users and update the state
+    const members = await channel.presence.get();
+    const allOnlineUsers = members.map(member => member.clientId);
+    setOnlineUsers(allOnlineUsers);
+
+    channel.presence.subscribe('enter', (member) => {
+      setOnlineUsers((prevUsers) => {
+        const updatedUsers = [...prevUsers];
+        if (!updatedUsers.includes(member.clientId)) {
+          updatedUsers.push(member.clientId);
+        }
+        return updatedUsers;
+      });
+    });
+
+    channel.presence.subscribe('leave', (member) => {
+      setOnlineUsers(
+        (prevUsers) => prevUsers.filter(user => user !== member.clientId));
+    });
+  }
+
   useEffect(() => {
     if (authUser) {
       const ably = new Realtime({
@@ -23,31 +49,7 @@ const AblyContextProvider = ({ children }) => {
 
       const channel = ably.channels.get('onlineUsers');
 
-      // User enters the channel
-      channel.presence.enter().then(() => {
-        console.log(`User ${authUser._id} has entered the channel`);
-
-        // Fetch the full list of online users and update the state
-        channel.presence.get().then((members) => {
-          const allOnlineUsers = members.map(member => member.clientId);
-          setOnlineUsers(allOnlineUsers);
-        });
-      });
-
-      channel.presence.subscribe('enter', (member) => {
-        setOnlineUsers((prevUsers) => {
-          const updatedUsers = [...prevUsers];
-          if (!updatedUsers.includes(member.clientId)) {
-            updatedUsers.push(member.clientId);
-          }
-          return updatedUsers;
-        });
-      });
-
-      channel.presence.subscribe('leave', (member) => {
-        setOnlineUsers(
-          (prevUsers) => prevUsers.filter(user => user !== member.clientId));
-      });
+      handleEnterChannel(channel)
 
       return () => {
         channel.presence.leave();

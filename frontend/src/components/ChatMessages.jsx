@@ -2,14 +2,14 @@ import ChatMessage from './ChatMessage.jsx';
 import useChatStore from '../store/useChatStore.js';
 import { useEffect, useRef, useState } from 'react';
 import { Skeleton } from 'antd';
-import { useSocketContext } from '../context/SocketContext.jsx';
 import notificationSound from '../assets/notification.mp3';
+import { useAblyContext } from '../context/AblyContext.jsx';
 
 const ChatMessages = () => {
   const { messages, setMessages, selectedChat } = useChatStore();
   const [loading, setLoading] = useState(false);
   const lastMessageRef = useRef(null);
-  const {socket} = useSocketContext();
+  const { ablyClient } = useAblyContext();
 
   const getMessages = async () => {
     setLoading(true);
@@ -44,15 +44,21 @@ const ChatMessages = () => {
   }, [messages]);
 
   useEffect(() => {
-    socket?.on('newMessage', (newMessage) => {
+    // socket?.on('newMessage', (newMessage) => {
+    //   const notification = new Audio(notificationSound);
+    //   notification.play();
+    //   setMessages([...messages, newMessage]);
+    // });
+    const channel = ablyClient?.channels.get('messages');
+    channel?.subscribe('newMessage', async (message) => {
       const notification = new Audio(notificationSound);
-      notification.play();
-      setMessages([...messages, newMessage]);
-    })
+      await notification.play();
+      setMessages([...messages, message.data]);
+    });
 
-    return () => socket?.off('newMessage');
-  }, [socket, messages, setMessages]);
-
+    // return () => socket?.off('newMessage');
+    return () => ablyClient?.channels.get('messages').unsubscribe('newMessage');
+  }, [ablyClient, messages, setMessages]);
 
   return (
     <>

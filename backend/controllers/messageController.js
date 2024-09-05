@@ -1,8 +1,6 @@
 import Conversation from '../models/conversationModel.js';
 import Message from '../models/messageModel.js';
 import chalk from 'chalk';
-import { getReceiverSocketId } from '../socket/socket.js';
-import { io } from '../socket/socket.js';
 
 const sendMessage = async (req, res) => {
   try {
@@ -36,11 +34,11 @@ const sendMessage = async (req, res) => {
       // Run in parallel
       await Promise.all([newMessage.save(), conversation.save()]);
 
-      // Emit the message to the receiver
-      const receiverSocketId = getReceiverSocketId(receiverId);
-      if (receiverSocketId) {
-        io.to(receiverSocketId).emit('newMessage', newMessage);
-      }
+      // // Emit the message to the receiver
+      // const receiverSocketId = getReceiverSocketId(receiverId);
+      // if (receiverSocketId) {
+      //   io.to(receiverSocketId).emit('newMessage', newMessage);
+      // }
 
       res.status(200).json({
         message: newMessage,

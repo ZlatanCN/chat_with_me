@@ -11,11 +11,11 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <AuthContextProvider>
-        <SocketContextProvider>
-          <AblyContextProvider>
-            <App/>
-          </AblyContextProvider>
-        </SocketContextProvider>
+        {/*<SocketContextProvider>*/}
+        <AblyContextProvider>
+          <App/>
+        </AblyContextProvider>
+        {/*</SocketContextProvider>*/}
       </AuthContextProvider>
     </BrowserRouter>
   </StrictMode>,

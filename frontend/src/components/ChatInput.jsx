@@ -9,6 +9,7 @@ import { useRef, useState } from 'react';
 import useChatStore from '../store/useChatStore.js';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
+import { useAblyContext } from '../context/AblyContext.jsx';
 
 const ChatInput = () => {
   const [form] = useForm();
@@ -16,6 +17,7 @@ const ChatInput = () => {
   const { selectedChat, messages, setMessages } = useChatStore();
   const [messageApi, contextHolder] = message.useMessage();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const { ablyClient } = useAblyContext();
 
   const sendMessage = async (message) => {
     let body;
@@ -41,11 +43,11 @@ const ChatInput = () => {
         body,
       });
       const data = await res.json();
-      console.log('message:', data.message);
       if (data.error) {
         console.log('Error sending message:', data.error);
       } else {
-        setMessages([...messages, data.message]);
+        const channel = ablyClient?.channels.get('messages');
+        channel.publish('newMessage', data.message);
       }
     } catch (error) {
       console.log('Error sending message in ChatInput:', error);
@@ -70,14 +72,15 @@ const ChatInput = () => {
   };
 
   const beforeImageUpload = (file) => {
-    const isLt16MB = file.size / 1024 / 1024 < 16;
-    if (!isLt16MB) {
+    // Ably limits message size to 64KB
+    const isLt64KB = file.size < 65536; // 64KB
+    if (!isLt64KB) {
       messageApi.open({
         type: 'error',
-        content: 'Image must be smaller than 16MB!',
+        content: 'Image must be smaller than 64KB!',
       });
     }
-    return isLt16MB;
+    return isLt64KB;
   };
 
   const handleUpload = async (options) => {

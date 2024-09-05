@@ -5,11 +5,13 @@ import authRoutes from '../backend/routes/authRoutes.js';
 import messageRoutes from '../backend/routes/messageRoutes.js';
 import userRoutes from '../backend/routes/userRoutes.js';
 import { connectToDatabase } from '../backend/db/connectToDatabase.js';
-import { app, server } from '../backend/socket/socket.js';
 import chalk from 'chalk';
 import path from 'path';
 import cors from 'cors';
+import http from 'http';
 
+const app = express();
+const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 dotenv.config();

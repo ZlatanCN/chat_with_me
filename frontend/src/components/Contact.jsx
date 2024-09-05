@@ -2,14 +2,12 @@ import { Avatar, List } from 'antd';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import useChatStore from '../store/useChatStore.js';
-import { useSocketContext } from '../context/SocketContext.jsx';
 import { useAblyContext } from '../context/AblyContext.jsx';
 
 const AVATAR_SIZE = 48;
 
 const Contact = (props) => {
   const { selectedChat, setSelectedChat } = useChatStore();
-  const { onlineUsers } = useSocketContext();
   const { ablyOnlineUsers } = useAblyContext();
 
   return (
