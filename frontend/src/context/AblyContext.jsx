@@ -40,7 +40,7 @@ const AblyContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    console.log('AblyClient Key:', import.meta.env.VITE_ABLY_CLIENT_API_KEY);
+    // console.log('AblyClient Key:', import.meta.env.VITE_ABLY_CLIENT_API_KEY);
     if (authUser) {
       const ably = new Realtime({
         key: import.meta.env.VITE_ABLY_CLIENT_API_KEY,
