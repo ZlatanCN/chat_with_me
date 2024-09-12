@@ -73,7 +73,7 @@ const ChatInput = () => {
 
   const beforeImageUpload = (file) => {
     // Ably limits message size to 64KB
-    const isLt64KB = file.size < 65536; // 64KB
+    const isLt64KB = file.size < 18000; // 64KB
     if (!isLt64KB) {
       messageApi.open({
         type: 'error',
